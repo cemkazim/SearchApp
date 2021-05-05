@@ -1,0 +1,14 @@
+//
+//  SearchViewModel.swift
+//  SearchApp
+//
+//  Created by Cem Kazım on 5.05.2021.
+//
+
+import Foundation
+
+protocol SearchViewModelDelegate: class {
+}
+
+class SearchViewModel {
+}
