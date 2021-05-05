@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,7 @@
 		00FBFCA526428A0B00124B8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00FBFCA326428A0B00124B8B /* Main.storyboard */; };
 		00FBFCA726428A0D00124B8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00FBFCA626428A0D00124B8B /* Assets.xcassets */; };
 		00FBFCAA26428A0D00124B8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00FBFCA826428A0D00124B8B /* LaunchScreen.storyboard */; };
+		00FBFCC026428C4800124B8B /* BaseNetworkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FBFCBF26428C4800124B8B /* BaseNetworkLayer.swift */; };
 		C81BFA57776DE322A7F7BF44 /* Pods_SearchApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4473180ECD485BCA065CBEC7 /* Pods_SearchApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,7 @@
 		00FBFCA626428A0D00124B8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		00FBFCA926428A0D00124B8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		00FBFCAB26428A0D00124B8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00FBFCBF26428C4800124B8B /* BaseNetworkLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNetworkLayer.swift; sourceTree = "<group>"; };
 		088C826A327E91FC5BD543D0 /* Pods-SearchApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchApp.debug.xcconfig"; path = "Target Support Files/Pods-SearchApp/Pods-SearchApp.debug.xcconfig"; sourceTree = "<group>"; };
 		4473180ECD485BCA065CBEC7 /* Pods_SearchApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SearchApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF227C35317278A1C1212574 /* Pods-SearchApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchApp.release.xcconfig"; path = "Target Support Files/Pods-SearchApp/Pods-SearchApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -63,15 +65,88 @@
 		00FBFC9C26428A0B00124B8B /* SearchApp */ = {
 			isa = PBXGroup;
 			children = (
-				00FBFC9D26428A0B00124B8B /* AppDelegate.swift */,
-				00FBFC9F26428A0B00124B8B /* SceneDelegate.swift */,
-				00FBFCA126428A0B00124B8B /* ViewController.swift */,
-				00FBFCA326428A0B00124B8B /* Main.storyboard */,
-				00FBFCA626428A0D00124B8B /* Assets.xcassets */,
-				00FBFCA826428A0D00124B8B /* LaunchScreen.storyboard */,
+				00FBFCBC26428BEC00124B8B /* Scenes */,
+				00FBFCBB26428BE700124B8B /* Components */,
+				00FBFCBA26428BE300124B8B /* Network */,
+				00FBFCB926428BDE00124B8B /* Supporting Files */,
+				00FBFCB826428BD500124B8B /* Utilities */,
 				00FBFCAB26428A0D00124B8B /* Info.plist */,
 			);
 			path = SearchApp;
+			sourceTree = "<group>";
+		};
+		00FBFCB826428BD500124B8B /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		00FBFCB926428BDE00124B8B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				00FBFC9D26428A0B00124B8B /* AppDelegate.swift */,
+				00FBFC9F26428A0B00124B8B /* SceneDelegate.swift */,
+				00FBFCA626428A0D00124B8B /* Assets.xcassets */,
+				00FBFCA826428A0D00124B8B /* LaunchScreen.storyboard */,
+				00FBFCA326428A0B00124B8B /* Main.storyboard */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		00FBFCBA26428BE300124B8B /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				00FBFCBD26428C3200124B8B /* APILayer */,
+				00FBFCBE26428C3700124B8B /* ServiceLayer */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		00FBFCBB26428BE700124B8B /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		00FBFCBC26428BEC00124B8B /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				00FBFCC326428C9900124B8B /* Search */,
+				00FBFCC426428CA000124B8B /* Detail */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		00FBFCBD26428C3200124B8B /* APILayer */ = {
+			isa = PBXGroup;
+			children = (
+				00FBFCBF26428C4800124B8B /* BaseNetworkLayer.swift */,
+			);
+			path = APILayer;
+			sourceTree = "<group>";
+		};
+		00FBFCBE26428C3700124B8B /* ServiceLayer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ServiceLayer;
+			sourceTree = "<group>";
+		};
+		00FBFCC326428C9900124B8B /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				00FBFCA126428A0B00124B8B /* ViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		00FBFCC426428CA000124B8B /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 		6D415F04E719A4353AD78FF0 /* Frameworks */ = {
@@ -88,7 +163,6 @@
 				088C826A327E91FC5BD543D0 /* Pods-SearchApp.debug.xcconfig */,
 				FF227C35317278A1C1212574 /* Pods-SearchApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -209,6 +283,7 @@
 				00FBFCA226428A0B00124B8B /* ViewController.swift in Sources */,
 				00FBFC9E26428A0B00124B8B /* AppDelegate.swift in Sources */,
 				00FBFCA026428A0B00124B8B /* SceneDelegate.swift in Sources */,
+				00FBFCC026428C4800124B8B /* BaseNetworkLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
