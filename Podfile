@@ -6,6 +6,7 @@ target 'SearchApp' do
   use_frameworks!
   pod 'Alamofire'
   pod 'RxSwift'
+  pod 'SDWebImage'
   # Pods for SearchApp
 
 end

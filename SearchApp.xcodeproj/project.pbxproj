@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00929B082643C92D002B6C76 /* APIParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00929B072643C92D002B6C76 /* APIParams.swift */; };
 		00FBFC9E26428A0B00124B8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FBFC9D26428A0B00124B8B /* AppDelegate.swift */; };
 		00FBFCA026428A0B00124B8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FBFC9F26428A0B00124B8B /* SceneDelegate.swift */; };
 		00FBFCA226428A0B00124B8B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FBFCA126428A0B00124B8B /* SearchViewController.swift */; };
@@ -17,10 +18,13 @@
 		00FBFCDA26428FFA00124B8B /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FBFCD926428FFA00124B8B /* SearchViewModel.swift */; };
 		00FBFCDE264299B400124B8B /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FBFCDD264299B400124B8B /* SearchCollectionViewCell.swift */; };
 		00FBFCE326429D4000124B8B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FBFCE226429D4000124B8B /* Constants.swift */; };
+		00FBFCEA2642AEAB00124B8B /* SearchServiceLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FBFCE92642AEAB00124B8B /* SearchServiceLayer.swift */; };
+		00FBFCED2642B35900124B8B /* SearchBarScopeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FBFCEC2642B35900124B8B /* SearchBarScopeType.swift */; };
 		C81BFA57776DE322A7F7BF44 /* Pods_SearchApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4473180ECD485BCA065CBEC7 /* Pods_SearchApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00929B072643C92D002B6C76 /* APIParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIParams.swift; sourceTree = "<group>"; };
 		00FBFC9A26428A0B00124B8B /* SearchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SearchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00FBFC9D26428A0B00124B8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00FBFC9F26428A0B00124B8B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -33,6 +37,8 @@
 		00FBFCD926428FFA00124B8B /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		00FBFCDD264299B400124B8B /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		00FBFCE226429D4000124B8B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		00FBFCE92642AEAB00124B8B /* SearchServiceLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchServiceLayer.swift; sourceTree = "<group>"; };
+		00FBFCEC2642B35900124B8B /* SearchBarScopeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarScopeType.swift; sourceTree = "<group>"; };
 		088C826A327E91FC5BD543D0 /* Pods-SearchApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchApp.debug.xcconfig"; path = "Target Support Files/Pods-SearchApp/Pods-SearchApp.debug.xcconfig"; sourceTree = "<group>"; };
 		4473180ECD485BCA065CBEC7 /* Pods_SearchApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SearchApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF227C35317278A1C1212574 /* Pods-SearchApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SearchApp.release.xcconfig"; path = "Target Support Files/Pods-SearchApp/Pods-SearchApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -85,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				00FBFCE226429D4000124B8B /* Constants.swift */,
+				00FBFCEC2642B35900124B8B /* SearchBarScopeType.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -130,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				00FBFCBF26428C4800124B8B /* BaseNetworkLayer.swift */,
+				00929B072643C92D002B6C76 /* APIParams.swift */,
 			);
 			path = APILayer;
 			sourceTree = "<group>";
@@ -137,6 +145,7 @@
 		00FBFCBE26428C3700124B8B /* ServiceLayer */ = {
 			isa = PBXGroup;
 			children = (
+				00FBFCE92642AEAB00124B8B /* SearchServiceLayer.swift */,
 			);
 			path = ServiceLayer;
 			sourceTree = "<group>";
@@ -300,9 +309,12 @@
 				00FBFCA226428A0B00124B8B /* SearchViewController.swift in Sources */,
 				00FBFC9E26428A0B00124B8B /* AppDelegate.swift in Sources */,
 				00FBFCA026428A0B00124B8B /* SceneDelegate.swift in Sources */,
+				00FBFCED2642B35900124B8B /* SearchBarScopeType.swift in Sources */,
+				00929B082643C92D002B6C76 /* APIParams.swift in Sources */,
 				00FBFCD726428FF200124B8B /* SearchModel.swift in Sources */,
 				00FBFCDE264299B400124B8B /* SearchCollectionViewCell.swift in Sources */,
 				00FBFCC026428C4800124B8B /* BaseNetworkLayer.swift in Sources */,
+				00FBFCEA2642AEAB00124B8B /* SearchServiceLayer.swift in Sources */,
 				00FBFCE326429D4000124B8B /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Constants {
+struct StaticTexts {
     
     static let searchCollectionViewCellID = "SearchCollectionViewCell"
+    static let searchText = "Search"
 }
