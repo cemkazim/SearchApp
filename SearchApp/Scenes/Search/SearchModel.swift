@@ -58,3 +58,18 @@ struct ResultModel: Decodable {
         case longDescription
     }
 }
+
+class SearchItemModel {
+    
+    var name: String?
+    var imageURL: URL?
+    var releaseDate: String?
+    var price: String?
+    
+    init(name: String?, imageURL: URL?, releaseDate: String?, price: String?) {
+        self.name = name
+        self.imageURL = imageURL
+        self.releaseDate = releaseDate
+        self.price = price
+    }
+}

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SearchBarScopeType: String {
+enum SearchBarScopeType: String, CaseIterable {
     case movie
     case music
     case software

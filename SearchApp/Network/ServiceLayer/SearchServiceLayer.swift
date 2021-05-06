@@ -15,7 +15,7 @@ class MovieDetailServiceLayer {
     
     private init() {}
     
-    func getSearchResult(term: String, media: String, offset: String, completionHandler: @escaping (SearchResults) -> Void) {
+    func getSearchResult(term: String, media: String, offset: Int, completionHandler: @escaping (SearchResults) -> Void) {
         let searchTerm = term.replacingOccurrences(of: " ", with: "+")
         let url = APIParams.shared.createURLWithParams(term: searchTerm, path: .search, media: media, offset: offset)
         guard let urlString = url?.absoluteString else { return }

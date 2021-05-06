@@ -13,7 +13,7 @@ class APIParams {
     
     private init() {}
     
-    func createURLWithParams(term: String, path: PathTypes, media: String, offset: String) -> URL? {
+    func createURLWithParams(term: String, path: PathTypes, media: String, offset: Int) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "itunes.apple.com"
@@ -21,7 +21,7 @@ class APIParams {
         components.queryItems = [
             URLQueryItem(name: "term", value: term),
             URLQueryItem(name: "media", value: media),
-            URLQueryItem(name: "offset", value: offset),
+            URLQueryItem(name: "offset", value: String(offset)),
             URLQueryItem(name: "limit", value: String(20))
         ]
         return components.url

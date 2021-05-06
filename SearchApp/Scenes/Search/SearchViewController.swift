@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class SearchViewController: UIViewController {
     
@@ -13,8 +14,9 @@ class SearchViewController: UIViewController {
         let bar = UISearchBar()
         bar.translatesAutoresizingMaskIntoConstraints = false
         bar.placeholder = StaticTexts.searchText
-        bar.scopeButtonTitles = [""]
+        bar.scopeButtonTitles = SearchBarScopeType.allCases.map { $0.scopeTitle }
         bar.selectedScopeButtonIndex = 0
+        bar.showsScopeBar = true
         return bar
     }()
     var searchCollectionView: UICollectionView = {
@@ -29,7 +31,7 @@ class SearchViewController: UIViewController {
         return view
     }()
     var searchViewModel = SearchViewModel()
-    var searchedText = ""
+    var selectedScopeType: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,19 +68,35 @@ class SearchViewController: UIViewController {
 }
 
 extension SearchViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let text = searchBar.text {
+            searchViewModel.getSearchResultData(term: text, media: selectedScopeType)
+            searchViewModel.listenSearchResultCallback { [weak self] in
+                guard let self = self else { return }
+                self.view.endEditing(true)
+                self.searchCollectionView.reloadData()
+            }
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        selectedScopeType = SearchBarScopeType.allCases[selectedScope].rawValue
+    }
 }
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return searchViewModel.searchResultList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StaticTexts.searchCollectionViewCellID, for: indexPath) as? SearchCollectionViewCell {
-            cell.searchItemImageView.image = UIImage()
-            cell.searchItemNameLabel.text = "Dark Side Of The Moon (Pink Floyd)"
-            cell.searchItemPriceLabel.text = "25$"
+            cell.searchItemImageView.sd_setImage(with: searchViewModel.searchResultList[indexPath.row].imageURL, completed: nil)
+            cell.searchItemNameLabel.text = searchViewModel.searchResultList[indexPath.row].name
+            cell.searchItemPriceLabel.text = searchViewModel.searchResultList[indexPath.row].price
+            cell.searchItemReleaseDateLabel.text = searchViewModel.searchResultList[indexPath.row].releaseDate
             return cell
         } else {
             return UICollectionViewCell()
