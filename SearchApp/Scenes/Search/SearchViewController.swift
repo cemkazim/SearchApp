@@ -17,6 +17,7 @@ class SearchViewController: UIViewController {
         bar.scopeButtonTitles = SearchBarScopeType.allCases.map { $0.scopeTitle }
         bar.selectedScopeButtonIndex = 0
         bar.showsScopeBar = true
+        bar.showsCancelButton = true
         return bar
     }()
     var searchCollectionView: UICollectionView = {
@@ -32,6 +33,7 @@ class SearchViewController: UIViewController {
     }()
     var searchViewModel = SearchViewModel()
     var selectedScopeType: String = ""
+    var searchBarText: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,21 +69,39 @@ class SearchViewController: UIViewController {
     }
 }
 
+extension SearchViewController {
+    
+    func resetCollectionView() {
+        searchViewModel.searchResultList.removeAll()
+        searchCollectionView.reloadData()
+    }
+    
+    func reloadCollectionView() {
+        searchViewModel.getSearchResultData(term: searchBarText, media: selectedScopeType)
+        searchViewModel.listenSearchResultCallback { [weak self] in
+            guard let self = self else { return }
+            self.view.endEditing(true)
+            self.searchCollectionView.reloadData()
+        }
+    }
+}
+
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let text = searchBar.text {
-            searchViewModel.getSearchResultData(term: text, media: selectedScopeType)
-            searchViewModel.listenSearchResultCallback { [weak self] in
-                guard let self = self else { return }
-                self.view.endEditing(true)
-                self.searchCollectionView.reloadData()
-            }
-        }
+        resetCollectionView()
+        searchBarText = searchBar.text ?? ""
+        reloadCollectionView()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        resetCollectionView()
+        view.endEditing(true)
     }
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         selectedScopeType = SearchBarScopeType.allCases[selectedScope].rawValue
+        resetCollectionView()
     }
 }
 
@@ -100,6 +120,13 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return cell
         } else {
             return UICollectionViewCell()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == searchViewModel.searchResultList.count - 1 {
+            searchViewModel.pageCount += 1
+            reloadCollectionView()
         }
     }
     
