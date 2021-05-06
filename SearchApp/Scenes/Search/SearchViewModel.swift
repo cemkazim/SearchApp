@@ -14,7 +14,7 @@ class SearchViewModel {
     var pageCount: Int = 1
     
     func getSearchResultData(term: String, media: String) {
-        MovieDetailServiceLayer.shared.getSearchResult(term: term, media: media, offset: pageCount, completionHandler: { [weak self] (data: SearchResults) in
+        SearchServiceLayer.shared.getSearchResult(term: term, media: media, offset: pageCount, completionHandler: { [weak self] (data: SearchResults) in
             guard let self = self, let results = data.results else { return }
             self.handleSearchResultData(results)
             self.searchResultCallback?()
@@ -36,7 +36,7 @@ class SearchViewModel {
         searchResultCallback = isCompleted
     }
     
-    func formatDate(with dateString: String) -> String? {
+    func formatDate(with dateString: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         guard let date = dateFormatter.date(from: dateString) else { return "" }

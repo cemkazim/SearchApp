@@ -20,9 +20,9 @@ class APIParams {
         components.path = path.value
         components.queryItems = [
             URLQueryItem(name: "term", value: term),
-            URLQueryItem(name: "media", value: media),
+            URLQueryItem(name: "limit", value: String(20)),
             URLQueryItem(name: "offset", value: String(offset)),
-            URLQueryItem(name: "limit", value: String(20))
+            URLQueryItem(name: "media", value: media)
         ]
         return components.url
     }

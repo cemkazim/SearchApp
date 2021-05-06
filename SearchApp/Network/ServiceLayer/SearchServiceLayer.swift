@@ -8,9 +8,9 @@
 import Foundation
 import RxSwift
 
-class MovieDetailServiceLayer {
+class SearchServiceLayer {
     
-    static let shared = MovieDetailServiceLayer()
+    static let shared = SearchServiceLayer()
     private var disposeBag = DisposeBag()
     
     private init() {}

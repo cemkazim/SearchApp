@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		003A8868264426AD009DDB7C /* SearchAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003A8867264426AD009DDB7C /* SearchAppTests.swift */; };
+		003A88762644270F009DDB7C /* SearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003A88752644270F009DDB7C /* SearchTests.swift */; };
 		00929B082643C92D002B6C76 /* APIParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00929B072643C92D002B6C76 /* APIParams.swift */; };
 		00FBFC9E26428A0B00124B8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FBFC9D26428A0B00124B8B /* AppDelegate.swift */; };
 		00FBFCA026428A0B00124B8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FBFC9F26428A0B00124B8B /* SceneDelegate.swift */; };
@@ -23,7 +25,21 @@
 		C81BFA57776DE322A7F7BF44 /* Pods_SearchApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4473180ECD485BCA065CBEC7 /* Pods_SearchApp.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		003A886A264426AD009DDB7C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00FBFC9226428A0B00124B8B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 00FBFC9926428A0B00124B8B;
+			remoteInfo = SearchApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		003A8865264426AD009DDB7C /* SearchAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SearchAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		003A8867264426AD009DDB7C /* SearchAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAppTests.swift; sourceTree = "<group>"; };
+		003A8869264426AD009DDB7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		003A88752644270F009DDB7C /* SearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTests.swift; sourceTree = "<group>"; };
 		00929B072643C92D002B6C76 /* APIParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIParams.swift; sourceTree = "<group>"; };
 		00FBFC9A26428A0B00124B8B /* SearchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SearchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00FBFC9D26428A0B00124B8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +61,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		003A8862264426AD009DDB7C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		00FBFC9726428A0B00124B8B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -56,10 +79,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		003A8866264426AD009DDB7C /* SearchAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				003A887B26442957009DDB7C /* TestBase */,
+				003A8874264426F0009DDB7C /* SceneTest */,
+				003A8867264426AD009DDB7C /* SearchAppTests.swift */,
+				003A8869264426AD009DDB7C /* Info.plist */,
+			);
+			path = SearchAppTests;
+			sourceTree = "<group>";
+		};
+		003A8874264426F0009DDB7C /* SceneTest */ = {
+			isa = PBXGroup;
+			children = (
+				003A88752644270F009DDB7C /* SearchTests.swift */,
+			);
+			path = SceneTest;
+			sourceTree = "<group>";
+		};
+		003A887B26442957009DDB7C /* TestBase */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TestBase;
+			sourceTree = "<group>";
+		};
 		00FBFC9126428A0B00124B8B = {
 			isa = PBXGroup;
 			children = (
 				00FBFC9C26428A0B00124B8B /* SearchApp */,
+				003A8866264426AD009DDB7C /* SearchAppTests */,
 				00FBFC9B26428A0B00124B8B /* Products */,
 				A88173F22F049F607D6ACD49 /* Pods */,
 				6D415F04E719A4353AD78FF0 /* Frameworks */,
@@ -70,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				00FBFC9A26428A0B00124B8B /* SearchApp.app */,
+				003A8865264426AD009DDB7C /* SearchAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -195,6 +246,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		003A8864264426AD009DDB7C /* SearchAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 003A886E264426AD009DDB7C /* Build configuration list for PBXNativeTarget "SearchAppTests" */;
+			buildPhases = (
+				003A8861264426AD009DDB7C /* Sources */,
+				003A8862264426AD009DDB7C /* Frameworks */,
+				003A8863264426AD009DDB7C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				003A886B264426AD009DDB7C /* PBXTargetDependency */,
+			);
+			name = SearchAppTests;
+			productName = SearchAppTests;
+			productReference = 003A8865264426AD009DDB7C /* SearchAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		00FBFC9926428A0B00124B8B /* SearchApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00FBFCAE26428A0D00124B8B /* Build configuration list for PBXNativeTarget "SearchApp" */;
@@ -223,6 +292,10 @@
 				LastSwiftUpdateCheck = 1210;
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
+					003A8864264426AD009DDB7C = {
+						CreatedOnToolsVersion = 12.1;
+						TestTargetID = 00FBFC9926428A0B00124B8B;
+					};
 					00FBFC9926428A0B00124B8B = {
 						CreatedOnToolsVersion = 12.1;
 					};
@@ -242,11 +315,19 @@
 			projectRoot = "";
 			targets = (
 				00FBFC9926428A0B00124B8B /* SearchApp */,
+				003A8864264426AD009DDB7C /* SearchAppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		003A8863264426AD009DDB7C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		00FBFC9826428A0B00124B8B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -301,6 +382,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		003A8861264426AD009DDB7C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				003A88762644270F009DDB7C /* SearchTests.swift in Sources */,
+				003A8868264426AD009DDB7C /* SearchAppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		00FBFC9626428A0B00124B8B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -321,6 +411,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		003A886B264426AD009DDB7C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 00FBFC9926428A0B00124B8B /* SearchApp */;
+			targetProxy = 003A886A264426AD009DDB7C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		00FBFCA826428A0D00124B8B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -333,6 +431,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		003A886C264426AD009DDB7C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SearchAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = cemkazim.SearchAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SearchApp.app/SearchApp";
+			};
+			name = Debug;
+		};
+		003A886D264426AD009DDB7C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SearchAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = cemkazim.SearchAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SearchApp.app/SearchApp";
+			};
+			name = Release;
+		};
 		00FBFCAC26428A0D00124B8B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -492,6 +628,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		003A886E264426AD009DDB7C /* Build configuration list for PBXNativeTarget "SearchAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				003A886C264426AD009DDB7C /* Debug */,
+				003A886D264426AD009DDB7C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		00FBFC9526428A0B00124B8B /* Build configuration list for PBXProject "SearchApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
