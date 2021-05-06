@@ -26,8 +26,10 @@ class SearchViewModel {
             let collectionName = result.collectionName
             let url = URL(string: result.artworkUrl100 ?? "")
             let date = formatDate(with: result.releaseDate ?? "")
-            let price = String(format: "%.2f", result.collectionPrice ?? 0)
-            let model = SearchItemModel(name: collectionName, imageURL: url, releaseDate: date, price: price)
+            let price = String(format: "%.2f", result.collectionPrice ?? 0) + "$"
+            let genre = result.primaryGenreName
+            let description = result.description
+            let model = SearchItemModel(name: collectionName, imageURL: url, releaseDate: date, price: price, genre: genre, description: description)
             searchResultList.append(model)
         }
     }

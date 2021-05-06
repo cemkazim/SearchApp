@@ -123,6 +123,12 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailViewController = DetailViewController()
+        navigationController?.pushViewController(detailViewController, animated: true)
+        detailViewController.detailViewModel = DetailViewModel(searchItemModel: searchViewModel.searchResultList[indexPath.row])
+    }
+    
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.row == searchViewModel.searchResultList.count - 1 {
             searchViewModel.pageCount += 1

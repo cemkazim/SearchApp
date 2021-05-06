@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		003A8868264426AD009DDB7C /* SearchAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003A8867264426AD009DDB7C /* SearchAppTests.swift */; };
 		003A88762644270F009DDB7C /* SearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003A88752644270F009DDB7C /* SearchTests.swift */; };
+		003A889D26444259009DDB7C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003A889C26444259009DDB7C /* DetailViewController.swift */; };
+		003A88A126444475009DDB7C /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003A88A026444475009DDB7C /* DetailViewModel.swift */; };
 		00929B082643C92D002B6C76 /* APIParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00929B072643C92D002B6C76 /* APIParams.swift */; };
 		00FBFC9E26428A0B00124B8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FBFC9D26428A0B00124B8B /* AppDelegate.swift */; };
 		00FBFCA026428A0B00124B8B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FBFC9F26428A0B00124B8B /* SceneDelegate.swift */; };
@@ -40,6 +42,8 @@
 		003A8867264426AD009DDB7C /* SearchAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAppTests.swift; sourceTree = "<group>"; };
 		003A8869264426AD009DDB7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		003A88752644270F009DDB7C /* SearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTests.swift; sourceTree = "<group>"; };
+		003A889C26444259009DDB7C /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		003A88A026444475009DDB7C /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		00929B072643C92D002B6C76 /* APIParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIParams.swift; sourceTree = "<group>"; };
 		00FBFC9A26428A0B00124B8B /* SearchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SearchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00FBFC9D26428A0B00124B8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -214,6 +218,8 @@
 		00FBFCC426428CA000124B8B /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				003A889C26444259009DDB7C /* DetailViewController.swift */,
+				003A88A026444475009DDB7C /* DetailViewModel.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -398,11 +404,13 @@
 				00FBFCDA26428FFA00124B8B /* SearchViewModel.swift in Sources */,
 				00FBFCA226428A0B00124B8B /* SearchViewController.swift in Sources */,
 				00FBFC9E26428A0B00124B8B /* AppDelegate.swift in Sources */,
+				003A889D26444259009DDB7C /* DetailViewController.swift in Sources */,
 				00FBFCA026428A0B00124B8B /* SceneDelegate.swift in Sources */,
 				00FBFCED2642B35900124B8B /* SearchBarScopeType.swift in Sources */,
 				00929B082643C92D002B6C76 /* APIParams.swift in Sources */,
 				00FBFCD726428FF200124B8B /* SearchModel.swift in Sources */,
 				00FBFCDE264299B400124B8B /* SearchCollectionViewCell.swift in Sources */,
+				003A88A126444475009DDB7C /* DetailViewModel.swift in Sources */,
 				00FBFCC026428C4800124B8B /* BaseNetworkLayer.swift in Sources */,
 				00FBFCEA2642AEAB00124B8B /* SearchServiceLayer.swift in Sources */,
 				00FBFCE326429D4000124B8B /* Constants.swift in Sources */,
