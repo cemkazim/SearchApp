@@ -62,7 +62,7 @@ class DetailViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = .zero
         label.textColor = .black
-        label.textAlignment = .left
+        label.textAlignment = .center
         return label
     }()
     var detailDescriptionLabel: UILabel = {
@@ -103,20 +103,16 @@ class DetailViewController: UIViewController {
             scrollableStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollableStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
-            detailImageView.topAnchor.constraint(equalTo: scrollableStackView.stackView.topAnchor, constant: 20),
             detailImageView.centerXAnchor.constraint(equalTo: scrollableStackView.stackView.centerXAnchor),
             detailImageView.heightAnchor.constraint(equalToConstant: 200),
-            detailImageView.widthAnchor.constraint(equalToConstant: 200),
             
             detailNameLabel.topAnchor.constraint(equalTo: detailImageView.bottomAnchor, constant: 20),
-            detailNameLabel.widthAnchor.constraint(equalToConstant: 200),
             detailNameLabel.centerXAnchor.constraint(equalTo: scrollableStackView.stackView.centerXAnchor),
             
             detailHeaderLabelStackView.topAnchor.constraint(equalTo: detailNameLabel.bottomAnchor, constant: 20),
             detailHeaderLabelStackView.centerXAnchor.constraint(equalTo: scrollableStackView.stackView.centerXAnchor),
             
             detailDescriptionLabel.topAnchor.constraint(equalTo: detailHeaderLabelStackView.bottomAnchor, constant: 20),
-            detailDescriptionLabel.widthAnchor.constraint(equalToConstant: 300),
             detailDescriptionLabel.centerXAnchor.constraint(equalTo: scrollableStackView.stackView.centerXAnchor)
         ])
     }

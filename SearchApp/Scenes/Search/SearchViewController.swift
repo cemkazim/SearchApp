@@ -80,13 +80,24 @@ extension SearchViewController {
         searchViewModel.getSearchResultData(term: searchBarText, media: selectedScopeType)
         searchViewModel.listenSearchResultCallback { [weak self] in
             guard let self = self else { return }
-            self.view.endEditing(true)
             self.searchCollectionView.reloadData()
         }
     }
 }
 
 extension SearchViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let searchedText = searchBar.text else { return }
+        switch searchedText.count {
+        case let x where x > 2:
+            searchBarSearchButtonClicked(searchBar)
+        case 0:
+            searchBarCancelButtonClicked(searchBar)
+        default:
+            return
+        }
+    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         resetCollectionView()

@@ -7,9 +7,9 @@
 
 import Foundation
 
-class APIParams {
+class URLCreator {
     
-    static let shared = APIParams()
+    static let shared = URLCreator()
     
     private init() {}
     
