@@ -126,7 +126,7 @@ extension SearchViewController: UISearchBarDelegate {
                 self.searchBarSearchButtonClicked(searchBar)
             }
             pendingRequestWorkItem = requestWorkItem
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: requestWorkItem)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: requestWorkItem)
         default:
             resetCollectionView()
         }
