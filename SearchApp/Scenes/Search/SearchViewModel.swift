@@ -28,7 +28,7 @@ class SearchViewModel {
             let date = formatDate(with: result.releaseDate ?? "")
             let price = String(format: "%.2f", result.collectionPrice ?? 0) + "$"
             let genre = result.primaryGenreName
-            let description = result.description
+            let description = result.longDescription
             let model = SearchItemModel(name: collectionName, imageURL: url, releaseDate: date, price: price, genre: genre, description: description)
             searchResultList.append(model)
         }

@@ -19,10 +19,19 @@ class SearchCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16)
-        label.numberOfLines = .zero
+        label.numberOfLines = 2
         label.textColor = .black
         label.textAlignment = .center
         return label
+    }()
+    lazy var searchItemLabelStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [searchItemPriceLabel, searchItemReleaseDateLabel])
+        stackView.spacing = 20
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        return stackView
     }()
     var searchItemPriceLabel: UILabel = {
         let label = UILabel()
@@ -55,9 +64,17 @@ class SearchCollectionViewCell: UICollectionViewCell {
     func setup() {
         addSubview(searchItemImageView)
         addSubview(searchItemNameLabel)
-        addSubview(searchItemPriceLabel)
-        addSubview(searchItemReleaseDateLabel)
+        addSubview(searchItemLabelStackView)
+        setUI()
         setupConstraints()
+    }
+    
+    func setUI() {
+        backgroundColor = .clear
+        layer.shadowOffset = CGSize(width: 1, height: 0)
+        layer.shadowColor = UIColor.gray.cgColor
+        layer.shadowRadius = 8
+        layer.shadowOpacity = 0.4
     }
     
     func setupConstraints() {
@@ -72,11 +89,8 @@ class SearchCollectionViewCell: UICollectionViewCell {
             searchItemNameLabel.widthAnchor.constraint(equalToConstant: 150),
             searchItemNameLabel.bottomAnchor.constraint(equalTo: searchItemPriceLabel.topAnchor, constant: -10),
             
-            searchItemPriceLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-            searchItemPriceLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15),
-            
-            searchItemReleaseDateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-            searchItemReleaseDateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15)
+            searchItemLabelStackView.topAnchor.constraint(equalTo: searchItemNameLabel.bottomAnchor, constant: 10),
+            searchItemLabelStackView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
 }

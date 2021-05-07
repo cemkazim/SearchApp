@@ -32,7 +32,7 @@ struct ResultModel: Decodable {
     let releaseDate: String?
     let primaryGenreName: String?
     let previewURL: String?
-    let description: String?
+    let shortDescription, longDescription: String?
     
     enum CodingKeys: String, CodingKey {
         case wrapperType
@@ -43,7 +43,7 @@ struct ResultModel: Decodable {
         case collectionViewURL
         case artworkUrl60, artworkUrl100, collectionPrice, collectionExplicitness, trackCount, country, currency, releaseDate, primaryGenreName
         case previewURL
-        case description
+        case shortDescription, longDescription
     }
 }
 
