@@ -42,6 +42,7 @@ class SearchViewController: UIViewController {
     }
     
     private func setupView() {
+        view.backgroundColor = .white
         addSubviews()
         setupConstraints()
         setupCollectionView()
@@ -95,6 +96,12 @@ extension SearchViewController {
             self.searchCollectionView.reloadData()
         }
     }
+    
+    private func search(with text: String) {
+        resetCollectionView()
+        searchedText = text
+        reloadCollectionView()
+    }
 }
 
 extension SearchViewController: UISearchBarDelegate {
@@ -105,7 +112,7 @@ extension SearchViewController: UISearchBarDelegate {
         case let x where x > 2:
             let requestWorkItem = DispatchWorkItem { [weak self] in
                 guard let self = self else { return }
-                self.searchBarSearchButtonClicked(searchBar)
+                self.search(with: searchText)
             }
             pendingRequestWorkItem = requestWorkItem
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: requestWorkItem)
@@ -115,9 +122,8 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        resetCollectionView()
-        searchedText = searchBar.text ?? ""
-        reloadCollectionView()
+        search(with: searchBar.text ?? "")
+        view.endEditing(true)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -157,9 +163,11 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row == searchViewModel.searchResultList.count - 1 {
-            searchViewModel.pageCount += 1
-            reloadCollectionView()
+        if searchViewModel.searchResultList.count >= 20 {
+            if indexPath.row == searchViewModel.searchResultList.count - 1 {
+                searchViewModel.pageCount += 1
+                reloadCollectionView()
+            }
         }
     }
     
