@@ -98,10 +98,10 @@ class DetailViewController: UIViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            scrollableStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollableStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollableStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollableStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            scrollableStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            scrollableStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            scrollableStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            scrollableStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             
             detailImageView.centerXAnchor.constraint(equalTo: scrollableStackView.stackView.centerXAnchor),
             detailImageView.heightAnchor.constraint(equalToConstant: 200),

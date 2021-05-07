@@ -11,11 +11,6 @@ public struct SearchResults: Decodable {
     
     public let resultCount: Int?
     public let results: [ResultModel]?
-    
-    public enum CodingKeys: String, CodingKey {
-        case resultCount
-        case results
-    }
 }
 
 public struct ResultModel: Decodable {
@@ -32,19 +27,7 @@ public struct ResultModel: Decodable {
     public let releaseDate: String?
     public let primaryGenreName: String?
     public let previewURL: String?
-    public let shortDescription, longDescription: String?
-    
-    public enum CodingKeys: String, CodingKey {
-        case wrapperType
-        case artistID
-        case collectionID
-        case artistName, collectionName, collectionCensoredName
-        case artistViewURL
-        case collectionViewURL
-        case artworkUrl60, artworkUrl100, collectionPrice, collectionExplicitness, trackCount, country, currency, releaseDate, primaryGenreName
-        case previewURL
-        case shortDescription, longDescription
-    }
+    public let description, shortDescription, longDescription: String?
 }
 
 public class SearchItemModel {

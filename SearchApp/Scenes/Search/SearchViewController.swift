@@ -32,8 +32,7 @@ class SearchViewController: UIViewController {
         return view
     }()
     private var searchViewModel = SearchViewModel()
-    private var loaderView = UIActivityIndicatorView(style: .large)
-    private var selectedScopeType: String = ""
+    private var selectedScopeType: String = SearchBarScopeType.movie.rawValue
     private var searchedText: String = ""
     private var pendingRequestWorkItem: DispatchWorkItem?
     
@@ -46,7 +45,6 @@ class SearchViewController: UIViewController {
         addSubviews()
         setupConstraints()
         setupCollectionView()
-        setupLoaderView()
         setupSearchBar()
         view.backgroundColor = .white
     }
@@ -54,7 +52,6 @@ class SearchViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(searchBar)
         view.addSubview(searchCollectionView)
-        view.addSubview(loaderView)
     }
     
     private func setupCollectionView() {
@@ -66,12 +63,6 @@ class SearchViewController: UIViewController {
     
     private func setupSearchBar() {
         searchBar.delegate = self
-    }
-    
-    private func setupLoaderView() {
-        loaderView.center = view.center
-        loaderView.startAnimating()
-        hideLoader()
     }
     
     private func setupConstraints() {
@@ -91,26 +82,18 @@ class SearchViewController: UIViewController {
 extension SearchViewController {
     
     private func resetCollectionView() {
+        searchedText = ""
+        searchViewModel.pageCount = 1
         searchViewModel.searchResultList.removeAll()
         searchCollectionView.reloadData()
     }
     
     private func reloadCollectionView() {
-        showLoader()
         searchViewModel.getSearchResultData(term: searchedText, media: selectedScopeType)
         searchViewModel.listenSearchResultCallback { [weak self] in
             guard let self = self else { return }
             self.searchCollectionView.reloadData()
-            self.hideLoader()
         }
-    }
-    
-    private func showLoader() {
-        loaderView.isHidden = false
-    }
-    
-    private func hideLoader() {
-        loaderView.isHidden = true
     }
 }
 
@@ -139,7 +122,6 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
-        searchedText = ""
         resetCollectionView()
         view.endEditing(true)
     }
