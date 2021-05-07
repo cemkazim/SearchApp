@@ -26,10 +26,6 @@ class SearchTests: XCTestCase {
         XCTAssertEqual(date, "Jan 01,2019")
     }
     
-    func testSearchBarPlaceholderText() {
-        XCTAssertEqual("Search", searchViewController.searchBar.placeholder)
-    }
-    
     func testSearchResultData() {
         let expect = expectation(description: "Get Search Result Data")
         SearchServiceLayer.shared.getSearchResult(term: "abc", media: "movie", offset: 1, completionHandler: { (data: SearchResults) in

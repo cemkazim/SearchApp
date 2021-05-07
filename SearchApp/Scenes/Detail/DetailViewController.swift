@@ -9,18 +9,18 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    lazy var scrollableStackView: ScrollableStackView = {
+    private var scrollableStackView: ScrollableStackView = {
         let view = ScrollableStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    var detailImageView: UIImageView = {
+    private var detailImageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFit
         return view
     }()
-    var detailNameLabel: UILabel = {
+    private var detailNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20)
@@ -29,7 +29,7 @@ class DetailViewController: UIViewController {
         label.textAlignment = .center
         return label
     }()
-    lazy var detailHeaderLabelStackView: UIStackView = {
+    private lazy var detailHeaderLabelStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [detailPriceLabel, detailGenreLabel, detailReleaseDateLabel])
         stackView.spacing = 20
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +38,7 @@ class DetailViewController: UIViewController {
         stackView.distribution = .fill
         return stackView
     }()
-    var detailPriceLabel: UILabel = {
+    private var detailPriceLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14)
@@ -47,7 +47,7 @@ class DetailViewController: UIViewController {
         label.textAlignment = .center
         return label
     }()
-    var detailGenreLabel: UILabel = {
+    private var detailGenreLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14)
@@ -56,7 +56,7 @@ class DetailViewController: UIViewController {
         label.textAlignment = .center
         return label
     }()
-    var detailReleaseDateLabel: UILabel = {
+    private var detailReleaseDateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14)
@@ -65,7 +65,7 @@ class DetailViewController: UIViewController {
         label.textAlignment = .center
         return label
     }()
-    var detailDescriptionLabel: UILabel = {
+    private var detailDescriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12)
@@ -74,21 +74,21 @@ class DetailViewController: UIViewController {
         label.textAlignment = .left
         return label
     }()
-    var detailViewModel: DetailViewModel?
+    public var detailViewModel: DetailViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
     
-    func setupView() {
+    private func setupView() {
         view.backgroundColor = .white
         addSubviews()
         setupConstraints()
         loadDataIntoViews()
     }
     
-    func addSubviews() {
+    private func addSubviews() {
         view.addSubview(scrollableStackView)
         scrollableStackView.stackView.addArrangedSubview(detailImageView)
         scrollableStackView.stackView.addArrangedSubview(detailNameLabel)
@@ -96,7 +96,7 @@ class DetailViewController: UIViewController {
         scrollableStackView.stackView.addArrangedSubview(detailDescriptionLabel)
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             scrollableStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollableStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -117,7 +117,7 @@ class DetailViewController: UIViewController {
         ])
     }
     
-    func loadDataIntoViews() {
+    private func loadDataIntoViews() {
         if let model = detailViewModel?.searchItemModel {
             detailImageView.sd_setImage(with: model.imageURL, completed: nil)
             detailNameLabel.text = model.name

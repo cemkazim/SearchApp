@@ -7,34 +7,34 @@
 
 import Foundation
 
-struct SearchResults: Decodable {
+public struct SearchResults: Decodable {
     
-    let resultCount: Int?
-    let results: [ResultModel]?
+    public let resultCount: Int?
+    public let results: [ResultModel]?
     
-    enum CodingKeys: String, CodingKey {
+    public enum CodingKeys: String, CodingKey {
         case resultCount
         case results
     }
 }
 
-struct ResultModel: Decodable {
+public struct ResultModel: Decodable {
     
-    let wrapperType: String?
-    let artistID, collectionID: Int?
-    let artistName, collectionName, collectionCensoredName: String?
-    let artistViewURL, collectionViewURL: String?
-    let artworkUrl60, artworkUrl100: String?
-    let collectionPrice: Double?
-    let collectionExplicitness: String?
-    let trackCount: Int?
-    let country, currency: String?
-    let releaseDate: String?
-    let primaryGenreName: String?
-    let previewURL: String?
-    let shortDescription, longDescription: String?
+    public let wrapperType: String?
+    public let artistID, collectionID: Int?
+    public let artistName, collectionName, collectionCensoredName: String?
+    public let artistViewURL, collectionViewURL: String?
+    public let artworkUrl60, artworkUrl100: String?
+    public let collectionPrice: Double?
+    public let collectionExplicitness: String?
+    public let trackCount: Int?
+    public let country, currency: String?
+    public let releaseDate: String?
+    public let primaryGenreName: String?
+    public let previewURL: String?
+    public let shortDescription, longDescription: String?
     
-    enum CodingKeys: String, CodingKey {
+    public enum CodingKeys: String, CodingKey {
         case wrapperType
         case artistID
         case collectionID
@@ -47,16 +47,16 @@ struct ResultModel: Decodable {
     }
 }
 
-class SearchItemModel {
+public class SearchItemModel {
     
-    var name: String?
-    var imageURL: URL?
-    var releaseDate: String?
-    var price: String?
-    var genre: String?
-    var description: String?
+    public var name: String?
+    public var imageURL: URL?
+    public var releaseDate: String?
+    public var price: String?
+    public var genre: String?
+    public var description: String?
     
-    init(name: String?, imageURL: URL?, releaseDate: String?, price: String?, genre: String?, description: String?) {
+    public init(name: String?, imageURL: URL?, releaseDate: String?, price: String?, genre: String?, description: String?) {
         self.name = name
         self.imageURL = imageURL
         self.releaseDate = releaseDate

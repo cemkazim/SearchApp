@@ -10,7 +10,7 @@ import SDWebImage
 
 class SearchViewController: UIViewController {
     
-    var searchBar: UISearchBar = {
+    private var searchBar: UISearchBar = {
         let bar = UISearchBar()
         bar.translatesAutoresizingMaskIntoConstraints = false
         bar.placeholder = StaticTexts.searchText
@@ -20,7 +20,7 @@ class SearchViewController: UIViewController {
         bar.showsCancelButton = true
         return bar
     }()
-    var searchCollectionView: UICollectionView = {
+    private var searchCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.estimatedItemSize = CGSize(width: 200, height: 200)
         layout.scrollDirection = .vertical
@@ -31,31 +31,50 @@ class SearchViewController: UIViewController {
         view.backgroundView = UIView.init(frame: .zero)
         return view
     }()
-    var searchViewModel = SearchViewModel()
-    var selectedScopeType: String = ""
-    var searchBarText: String = ""
+    private var searchViewModel = SearchViewModel()
+    private var loaderView = UIActivityIndicatorView(style: .large)
+    private var selectedScopeType: String = ""
+    private var searchBarText: String = ""
+    private var pendingRequestWorkItem: DispatchWorkItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
     
-    func setupView() {
+    private func setupView() {
         addSubviews()
         setupConstraints()
+        setupCollectionView()
+        setupLoaderView()
+        setupSearchBar()
         view.backgroundColor = .white
-        searchBar.delegate = self
+    }
+    
+    private func addSubviews() {
+        view.addSubview(searchBar)
+        view.addSubview(searchCollectionView)
+        view.addSubview(loaderView)
+    }
+    
+    private func setupCollectionView() {
         searchCollectionView.delegate = self
         searchCollectionView.dataSource = self
         searchCollectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: StaticTexts.searchCollectionViewCellID)
+        searchCollectionView.keyboardDismissMode = .onDrag
     }
     
-    func addSubviews() {
-        view.addSubview(searchBar)
-        view.addSubview(searchCollectionView)
+    private func setupSearchBar() {
+        searchBar.delegate = self
     }
     
-    func setupConstraints() {
+    private func setupLoaderView() {
+        loaderView.center = view.center
+        loaderView.startAnimating()
+        hideLoader()
+    }
+    
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -71,17 +90,27 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController {
     
-    func resetCollectionView() {
+    private func resetCollectionView() {
         searchViewModel.searchResultList.removeAll()
         searchCollectionView.reloadData()
     }
     
-    func reloadCollectionView() {
+    private func reloadCollectionView() {
+        showLoader()
         searchViewModel.getSearchResultData(term: searchBarText, media: selectedScopeType)
         searchViewModel.listenSearchResultCallback { [weak self] in
             guard let self = self else { return }
             self.searchCollectionView.reloadData()
+            self.hideLoader()
         }
+    }
+    
+    private func showLoader() {
+        loaderView.isHidden = false
+    }
+    
+    private func hideLoader() {
+        loaderView.isHidden = true
     }
 }
 
@@ -89,13 +118,17 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let searchedText = searchBar.text else { return }
+        pendingRequestWorkItem?.cancel()
         switch searchedText.count {
         case let x where x > 2:
-            searchBarSearchButtonClicked(searchBar)
-        case 0:
-            searchBarCancelButtonClicked(searchBar)
+            let requestWorkItem = DispatchWorkItem { [weak self] in
+                guard let self = self else { return }
+                self.searchBarSearchButtonClicked(searchBar)
+            }
+            pendingRequestWorkItem = requestWorkItem
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: requestWorkItem)
         default:
-            return
+            resetCollectionView()
         }
     }
     
@@ -106,6 +139,8 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBarText = ""
         resetCollectionView()
         view.endEditing(true)
     }
