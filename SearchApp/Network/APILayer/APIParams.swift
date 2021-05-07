@@ -7,13 +7,13 @@
 
 import Foundation
 
-class APIParams {
+public class URLCreator {
     
-    static let shared = APIParams()
+    public static let shared = URLCreator()
     
     private init() {}
     
-    func createURLWithParams(term: String, path: PathTypes, media: String, offset: Int) -> URL? {
+    public func createURLWithParams(term: String, path: PathTypes, media: String, offset: Int) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "itunes.apple.com"
@@ -28,13 +28,13 @@ class APIParams {
     }
 }
 
-enum PathTypes {
+public enum PathTypes {
     
-    typealias Value = String
+    public typealias Value = String
     
     case search
     
-    var value: String {
+    public var value: String {
         switch self {
         case .search:
             return "/search"

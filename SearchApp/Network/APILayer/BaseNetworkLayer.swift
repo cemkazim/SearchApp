@@ -8,13 +8,13 @@
 import Alamofire
 import RxSwift
 
-class BaseNetworkLayer {
+public class BaseNetworkLayer {
     
-    static let shared = BaseNetworkLayer()
+    public static let shared = BaseNetworkLayer()
     
     private init() {}
     
-    func request<T: Decodable>(requestUrl: String, requestMethod: HTTPMethod, requestParameters: Parameters? = nil) -> Observable<T> {
+    public func request<T: Decodable>(requestUrl: String, requestMethod: HTTPMethod, requestParameters: Parameters? = nil) -> Observable<T> {
         return Observable.create { observer -> Disposable in
             AF.request(requestUrl, method: requestMethod, parameters: requestParameters, encoding: URLEncoding.default).response { (response) in
                 guard let remoteData = response.data else { return }

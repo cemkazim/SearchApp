@@ -7,69 +7,61 @@
 
 import Foundation
 
-struct SearchResults: Decodable {
+public struct SearchResults: Decodable {
     
-    let resultCount: Int?
-    let results: [ResultModel]?
+    public let resultCount: Int?
+    public let results: [ResultModel]?
     
-    enum CodingKeys: String, CodingKey {
+    public enum CodingKeys: String, CodingKey {
         case resultCount
         case results
     }
 }
 
-struct ResultModel: Decodable {
+public struct ResultModel: Decodable {
     
-    let wrapperType: String?
-    let kind: String?
-    let trackId: Int?
-    let collectionName: String?
-    let collectionPrice: Double?
-    let artistName: String?
-    let trackName: String?
-    let trackPrice: Double?
-    let trackCensoredName: String?
-    let trackViewUrl: String?
-    let artworkUrl100: String?
-    let releaseDate: String?
-    let country: String?
-    let currency: String?
-    let description: String?
-    let shortDescription: String?
-    let longDescription: String?
+    public let wrapperType: String?
+    public let artistID, collectionID: Int?
+    public let artistName, collectionName, collectionCensoredName: String?
+    public let artistViewURL, collectionViewURL: String?
+    public let artworkUrl60, artworkUrl100: String?
+    public let collectionPrice: Double?
+    public let collectionExplicitness: String?
+    public let trackCount: Int?
+    public let country, currency: String?
+    public let releaseDate: String?
+    public let primaryGenreName: String?
+    public let previewURL: String?
+    public let shortDescription, longDescription: String?
     
-    enum CodingKeys: String, CodingKey {
+    public enum CodingKeys: String, CodingKey {
         case wrapperType
-        case kind
-        case trackId
-        case collectionName
-        case collectionPrice
-        case artistName
-        case trackName
-        case trackPrice
-        case trackCensoredName
-        case trackViewUrl
-        case artworkUrl100
-        case releaseDate
-        case country
-        case currency
-        case description
-        case shortDescription
-        case longDescription
+        case artistID
+        case collectionID
+        case artistName, collectionName, collectionCensoredName
+        case artistViewURL
+        case collectionViewURL
+        case artworkUrl60, artworkUrl100, collectionPrice, collectionExplicitness, trackCount, country, currency, releaseDate, primaryGenreName
+        case previewURL
+        case shortDescription, longDescription
     }
 }
 
-class SearchItemModel {
+public class SearchItemModel {
     
-    var name: String?
-    var imageURL: URL?
-    var releaseDate: String?
-    var price: String?
+    public var name: String?
+    public var imageURL: URL?
+    public var releaseDate: String?
+    public var price: String?
+    public var genre: String?
+    public var description: String?
     
-    init(name: String?, imageURL: URL?, releaseDate: String?, price: String?) {
+    public init(name: String?, imageURL: URL?, releaseDate: String?, price: String?, genre: String?, description: String?) {
         self.name = name
         self.imageURL = imageURL
         self.releaseDate = releaseDate
         self.price = price
+        self.genre = genre
+        self.description = description
     }
 }
