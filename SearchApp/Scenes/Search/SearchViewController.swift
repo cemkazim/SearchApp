@@ -34,7 +34,7 @@ class SearchViewController: UIViewController {
     private var searchViewModel = SearchViewModel()
     private var loaderView = UIActivityIndicatorView(style: .large)
     private var selectedScopeType: String = ""
-    private var searchBarText: String = ""
+    private var searchedText: String = ""
     private var pendingRequestWorkItem: DispatchWorkItem?
     
     override func viewDidLoad() {
@@ -97,7 +97,7 @@ extension SearchViewController {
     
     private func reloadCollectionView() {
         showLoader()
-        searchViewModel.getSearchResultData(term: searchBarText, media: selectedScopeType)
+        searchViewModel.getSearchResultData(term: searchedText, media: selectedScopeType)
         searchViewModel.listenSearchResultCallback { [weak self] in
             guard let self = self else { return }
             self.searchCollectionView.reloadData()
@@ -117,9 +117,8 @@ extension SearchViewController {
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let searchedText = searchBar.text else { return }
         pendingRequestWorkItem?.cancel()
-        switch searchedText.count {
+        switch searchText.count {
         case let x where x > 2:
             let requestWorkItem = DispatchWorkItem { [weak self] in
                 guard let self = self else { return }
@@ -134,20 +133,20 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         resetCollectionView()
-        searchBarText = searchBar.text ?? ""
+        searchedText = searchBar.text ?? ""
         reloadCollectionView()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
-        searchBarText = ""
+        searchedText = ""
         resetCollectionView()
         view.endEditing(true)
     }
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         selectedScopeType = SearchBarScopeType.allCases[selectedScope].rawValue
-        resetCollectionView()
+        searchBarSearchButtonClicked(searchBar)
     }
 }
 
