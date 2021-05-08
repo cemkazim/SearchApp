@@ -10,6 +10,8 @@ import SDWebImage
 
 class SearchViewController: UIViewController {
     
+    // MARK: - Properties -
+    
     private var searchBar: UISearchBar = {
         let bar = UISearchBar()
         bar.translatesAutoresizingMaskIntoConstraints = false
@@ -32,46 +34,31 @@ class SearchViewController: UIViewController {
         return view
     }()
     private var searchViewModel = SearchViewModel()
-    private var loaderView = UIActivityIndicatorView(style: .large)
-    private var selectedScopeType: String = ""
-    private var searchBarText: String = ""
+    private var selectedScopeType: String = SearchBarScopeType.movie.rawValue
+    private var searchedText: String = ""
     private var pendingRequestWorkItem: DispatchWorkItem?
+    
+    // MARK: - Lifecycles -
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
     
+    // MARK: - Methods -
+    
     private func setupView() {
+        view.backgroundColor = .white
         addSubviews()
         setupConstraints()
         setupCollectionView()
-        setupLoaderView()
         setupSearchBar()
-        view.backgroundColor = .white
+        setupToolbar()
     }
     
     private func addSubviews() {
         view.addSubview(searchBar)
         view.addSubview(searchCollectionView)
-        view.addSubview(loaderView)
-    }
-    
-    private func setupCollectionView() {
-        searchCollectionView.delegate = self
-        searchCollectionView.dataSource = self
-        searchCollectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: StaticTexts.searchCollectionViewCellID)
-        searchCollectionView.keyboardDismissMode = .onDrag
-    }
-    
-    private func setupSearchBar() {
-        searchBar.delegate = self
-    }
-    
-    private func setupLoaderView() {
-        loaderView.center = view.center
-        loaderView.startAnimating()
-        hideLoader()
     }
     
     private func setupConstraints() {
@@ -86,70 +73,99 @@ class SearchViewController: UIViewController {
             searchCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-}
-
-extension SearchViewController {
     
+    private func setupCollectionView() {
+        searchCollectionView.delegate = self
+        searchCollectionView.dataSource = self
+        searchCollectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: StaticTexts.searchCollectionViewCellID)
+        searchCollectionView.keyboardDismissMode = .onDrag
+    }
+    
+    private func setupSearchBar() {
+        searchBar.delegate = self
+    }
+    
+    private func setupToolbar() {
+        let toolbar = UIToolbar()
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(title: StaticTexts.doneText, style: .done, target: self, action: #selector(doneButtonTapped))
+        toolbar.setItems([space, doneButton], animated: true)
+        toolbar.sizeToFit()
+        searchBar.inputAccessoryView = toolbar
+    }
+    
+    /// Reset collection view and searchedText.
     private func resetCollectionView() {
-        searchViewModel.searchResultList.removeAll()
+        searchedText = ""
+        searchViewModel.resetSearchTypes()
         searchCollectionView.reloadData()
     }
     
+    /// Reload collection view with the searched text and selected scope type.
     private func reloadCollectionView() {
-        showLoader()
-        searchViewModel.getSearchResultData(term: searchBarText, media: selectedScopeType)
+        searchViewModel.getSearchResultData(term: searchedText, media: selectedScopeType)
         searchViewModel.listenSearchResultCallback { [weak self] in
             guard let self = self else { return }
             self.searchCollectionView.reloadData()
-            self.hideLoader()
         }
     }
     
-    private func showLoader() {
-        loaderView.isHidden = false
+    /// Get movie, music, app and book datas with searched text.
+    private func search(with text: String?) {
+        guard let text = text else { fatalError() }
+        resetCollectionView()
+        searchedText = text
+        reloadCollectionView()
     }
     
-    private func hideLoader() {
-        loaderView.isHidden = true
+    /// Dismiss the keyboard.
+    private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    // MARK: - Actions -
+    
+    @objc func doneButtonTapped() {
+        dismissKeyboard()
     }
 }
+
+// MARK: - SearchViewController: UISearchBarDelegate -
 
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let searchedText = searchBar.text else { return }
         pendingRequestWorkItem?.cancel()
-        switch searchedText.count {
-        case let x where x > 2:
+        if searchText.count > 2 {
             let requestWorkItem = DispatchWorkItem { [weak self] in
                 guard let self = self else { return }
-                self.searchBarSearchButtonClicked(searchBar)
+                self.search(with: searchText)
             }
             pendingRequestWorkItem = requestWorkItem
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: requestWorkItem)
-        default:
+        } else {
             resetCollectionView()
         }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        resetCollectionView()
-        searchBarText = searchBar.text ?? ""
-        reloadCollectionView()
+        search(with: searchBar.text)
+        dismissKeyboard()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
-        searchBarText = ""
         resetCollectionView()
-        view.endEditing(true)
+        dismissKeyboard()
     }
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         selectedScopeType = SearchBarScopeType.allCases[selectedScope].rawValue
-        resetCollectionView()
+        searchBarSearchButtonClicked(searchBar)
     }
 }
+
+// MARK: - SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout -
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -159,10 +175,12 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StaticTexts.searchCollectionViewCellID, for: indexPath) as? SearchCollectionViewCell {
-            cell.searchItemImageView.sd_setImage(with: searchViewModel.searchResultList[indexPath.row].imageURL, completed: nil)
-            cell.searchItemNameLabel.text = searchViewModel.searchResultList[indexPath.row].name
-            cell.searchItemPriceLabel.text = searchViewModel.searchResultList[indexPath.row].price
-            cell.searchItemReleaseDateLabel.text = searchViewModel.searchResultList[indexPath.row].releaseDate
+            let resultModel = searchViewModel.searchResultList[indexPath.row]
+            cell.updateUI(nameText: resultModel.name,
+                          priceText: resultModel.price,
+                          releaseDateText: resultModel.releaseDate,
+                          imageURL: resultModel.imageURL,
+                          indicator: SDWebImageActivityIndicator.gray)
             return cell
         } else {
             return UICollectionViewCell()
@@ -176,9 +194,12 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row == searchViewModel.searchResultList.count - 1 {
-            searchViewModel.pageCount += 1
-            reloadCollectionView()
+        // If "searchResultList.count" is less than "searchViewModel.pageItemLimit * searchViewModel.pageCount", don't search.
+        if searchViewModel.searchResultList.count == searchViewModel.pageItemLimit * searchViewModel.pageCount {
+            if indexPath.row == searchViewModel.searchResultList.count - 1 {
+                searchViewModel.increasePageCount()
+                reloadCollectionView()
+            }
         }
     }
     
