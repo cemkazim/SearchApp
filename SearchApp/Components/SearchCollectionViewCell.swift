@@ -70,7 +70,6 @@ class SearchCollectionViewCell: UICollectionViewCell {
     }
     
     func setUI() {
-        backgroundColor = .clear
         layer.shadowOffset = CGSize(width: 1, height: 0)
         layer.shadowColor = UIColor.gray.cgColor
         layer.shadowRadius = 8

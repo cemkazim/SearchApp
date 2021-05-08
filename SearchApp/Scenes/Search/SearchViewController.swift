@@ -47,23 +47,12 @@ class SearchViewController: UIViewController {
         setupConstraints()
         setupCollectionView()
         setupSearchBar()
-        view.backgroundColor = .white
+        setupToolbar()
     }
     
     private func addSubviews() {
         view.addSubview(searchBar)
         view.addSubview(searchCollectionView)
-    }
-    
-    private func setupCollectionView() {
-        searchCollectionView.delegate = self
-        searchCollectionView.dataSource = self
-        searchCollectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: StaticTexts.searchCollectionViewCellID)
-        searchCollectionView.keyboardDismissMode = .onDrag
-    }
-    
-    private func setupSearchBar() {
-        searchBar.delegate = self
     }
     
     private func setupConstraints() {
@@ -77,6 +66,30 @@ class SearchViewController: UIViewController {
             searchCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             searchCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    private func setupCollectionView() {
+        searchCollectionView.delegate = self
+        searchCollectionView.dataSource = self
+        searchCollectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: StaticTexts.searchCollectionViewCellID)
+        searchCollectionView.keyboardDismissMode = .onDrag
+    }
+    
+    private func setupSearchBar() {
+        searchBar.delegate = self
+    }
+    
+    private func setupToolbar() {
+        let toolbar = UIToolbar()
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(title: StaticTexts.doneText, style: .done, target: self, action: #selector(doneButtonTapped))
+        toolbar.setItems([space, doneButton], animated: true)
+        toolbar.sizeToFit()
+        searchBar.inputAccessoryView = toolbar
+    }
+    
+    @objc func doneButtonTapped() {
+        dismissKeyboard()
     }
 }
 
@@ -102,6 +115,10 @@ extension SearchViewController {
         searchedText = text
         reloadCollectionView()
     }
+    
+    private func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
 
 extension SearchViewController: UISearchBarDelegate {
@@ -123,13 +140,13 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         search(with: searchBar.text ?? "")
-        view.endEditing(true)
+        dismissKeyboard()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         resetCollectionView()
-        view.endEditing(true)
+        dismissKeyboard()
     }
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
@@ -146,6 +163,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StaticTexts.searchCollectionViewCellID, for: indexPath) as? SearchCollectionViewCell {
+            cell.searchItemImageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.searchItemImageView.sd_setImage(with: searchViewModel.searchResultList[indexPath.row].imageURL, completed: nil)
             cell.searchItemNameLabel.text = searchViewModel.searchResultList[indexPath.row].name
             cell.searchItemPriceLabel.text = searchViewModel.searchResultList[indexPath.row].price
@@ -163,7 +181,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if searchViewModel.searchResultList.count >= 20 {
+        if searchViewModel.searchResultList.count > 19 {
             if indexPath.row == searchViewModel.searchResultList.count - 1 {
                 searchViewModel.pageCount += 1
                 reloadCollectionView()
