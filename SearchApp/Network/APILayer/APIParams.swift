@@ -7,20 +7,27 @@
 
 import Foundation
 
-public class URLCreator {
+class URLCreator {
     
     public static let shared = URLCreator()
     
     private init() {}
     
-    public func createURLWithParams(term: String, path: PathTypes, media: String, offset: Int) -> URL? {
+    /// Description: Request the API data with parameters.
+    /// - Parameters:
+    ///   - term:User typed text
+    ///   - path:Path type
+    ///   - media: Media type (etc. movie, music, software, ebook)
+    ///   - offset: Number of page
+    ///   - limit: Number of items to fetch
+    func createURLWithParameters(term: String, path: PathTypes, media: String, offset: Int, limit: Int) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "itunes.apple.com"
         components.path = path.value
         components.queryItems = [
             URLQueryItem(name: "term", value: term),
-            URLQueryItem(name: "limit", value: String(20)),
+            URLQueryItem(name: "limit", value: String(limit)),
             URLQueryItem(name: "offset", value: String(offset)),
             URLQueryItem(name: "media", value: media)
         ]
@@ -28,13 +35,13 @@ public class URLCreator {
     }
 }
 
-public enum PathTypes {
+enum PathTypes {
     
-    public typealias Value = String
+    typealias Value = String
     
     case search
     
-    public var value: String {
+    var value: String {
         switch self {
         case .search:
             return "/search"

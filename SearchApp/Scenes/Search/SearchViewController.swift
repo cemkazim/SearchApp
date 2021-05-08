@@ -10,6 +10,8 @@ import SDWebImage
 
 class SearchViewController: UIViewController {
     
+    // MARK: - Properties -
+    
     private var searchBar: UISearchBar = {
         let bar = UISearchBar()
         bar.translatesAutoresizingMaskIntoConstraints = false
@@ -36,10 +38,14 @@ class SearchViewController: UIViewController {
     private var searchedText: String = ""
     private var pendingRequestWorkItem: DispatchWorkItem?
     
+    // MARK: - Lifecycles -
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
+    
+    // MARK: - Methods -
     
     private func setupView() {
         view.backgroundColor = .white
@@ -88,13 +94,6 @@ class SearchViewController: UIViewController {
         searchBar.inputAccessoryView = toolbar
     }
     
-    @objc func doneButtonTapped() {
-        dismissKeyboard()
-    }
-}
-
-extension SearchViewController {
-    
     /// Reset collection view and searchedText.
     private func resetCollectionView() {
         searchedText = ""
@@ -123,7 +122,15 @@ extension SearchViewController {
     private func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    // MARK: - Actions -
+    
+    @objc func doneButtonTapped() {
+        dismissKeyboard()
+    }
 }
+
+// MARK: - SearchViewController: UISearchBarDelegate -
 
 extension SearchViewController: UISearchBarDelegate {
     
@@ -158,6 +165,8 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout -
+
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -185,7 +194,8 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if searchViewModel.searchResultList.count > 19 {
+        // If "searchResultList.count" is less than "searchViewModel.pageItemLimit * searchViewModel.pageCount", don't search.
+        if searchViewModel.searchResultList.count == searchViewModel.pageItemLimit * searchViewModel.pageCount {
             if indexPath.row == searchViewModel.searchResultList.count - 1 {
                 searchViewModel.increasePageCount()
                 reloadCollectionView()

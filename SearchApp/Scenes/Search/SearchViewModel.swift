@@ -12,9 +12,10 @@ class SearchViewModel {
     var searchResultList = [SearchItemModel]()
     var searchResultCallback: (() -> ())?
     var pageCount: Int = 1
+    var pageItemLimit: Int = 20
     
     func getSearchResultData(term: String, media: String) {
-        SearchServiceLayer.shared.getSearchResult(term: term, media: media, offset: pageCount, completionHandler: { [weak self] (data: SearchResults) in
+        SearchServiceLayer.shared.getSearchResult(term: term, media: media, offset: pageCount, limit: pageItemLimit, completionHandler: { [weak self] (data: SearchResults) in
             guard let self = self, let results = data.results else { return }
             self.handleSearchResultData(results)
             self.searchResultCallback?()
