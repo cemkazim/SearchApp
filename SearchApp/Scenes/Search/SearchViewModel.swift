@@ -45,4 +45,13 @@ class SearchViewModel {
         dateFormatter.dateFormat = "MMM dd,yyyy"
         return dateFormatter.string(from: date)
     }
+    
+    func resetSearchTypes() {
+        pageCount = 1
+        searchResultList.removeAll()
+    }
+    
+    func increasePageCount() {
+        pageCount += 1
+    }
 }

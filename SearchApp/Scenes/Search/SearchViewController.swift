@@ -95,13 +95,14 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController {
     
+    /// Reset collection view and searchedText.
     private func resetCollectionView() {
         searchedText = ""
-        searchViewModel.pageCount = 1
-        searchViewModel.searchResultList.removeAll()
+        searchViewModel.resetSearchTypes()
         searchCollectionView.reloadData()
     }
     
+    /// Reload collection view with the searched text and selected scope type.
     private func reloadCollectionView() {
         searchViewModel.getSearchResultData(term: searchedText, media: selectedScopeType)
         searchViewModel.listenSearchResultCallback { [weak self] in
@@ -110,12 +111,15 @@ extension SearchViewController {
         }
     }
     
-    private func search(with text: String) {
+    /// Get movie, music, app and book datas with searched text.
+    private func search(with text: String?) {
+        guard let text = text else { fatalError() }
         resetCollectionView()
         searchedText = text
         reloadCollectionView()
     }
     
+    /// Dismiss the keyboard.
     private func dismissKeyboard() {
         view.endEditing(true)
     }
@@ -125,21 +129,20 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         pendingRequestWorkItem?.cancel()
-        switch searchText.count {
-        case let x where x > 2:
+        if searchText.count > 2 {
             let requestWorkItem = DispatchWorkItem { [weak self] in
                 guard let self = self else { return }
                 self.search(with: searchText)
             }
             pendingRequestWorkItem = requestWorkItem
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: requestWorkItem)
-        default:
+        } else {
             resetCollectionView()
         }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        search(with: searchBar.text ?? "")
+        search(with: searchBar.text)
         dismissKeyboard()
     }
     
@@ -163,11 +166,12 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StaticTexts.searchCollectionViewCellID, for: indexPath) as? SearchCollectionViewCell {
-            cell.searchItemImageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
-            cell.searchItemImageView.sd_setImage(with: searchViewModel.searchResultList[indexPath.row].imageURL, completed: nil)
-            cell.searchItemNameLabel.text = searchViewModel.searchResultList[indexPath.row].name
-            cell.searchItemPriceLabel.text = searchViewModel.searchResultList[indexPath.row].price
-            cell.searchItemReleaseDateLabel.text = searchViewModel.searchResultList[indexPath.row].releaseDate
+            let resultModel = searchViewModel.searchResultList[indexPath.row]
+            cell.updateUI(nameText: resultModel.name,
+                          priceText: resultModel.price,
+                          releaseDateText: resultModel.releaseDate,
+                          imageURL: resultModel.imageURL,
+                          indicator: SDWebImageActivityIndicator.gray)
             return cell
         } else {
             return UICollectionViewCell()
@@ -183,7 +187,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if searchViewModel.searchResultList.count > 19 {
             if indexPath.row == searchViewModel.searchResultList.count - 1 {
-                searchViewModel.pageCount += 1
+                searchViewModel.increasePageCount()
                 reloadCollectionView()
             }
         }

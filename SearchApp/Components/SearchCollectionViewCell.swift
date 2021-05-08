@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class SearchCollectionViewCell: UICollectionViewCell {
     
@@ -91,5 +92,13 @@ class SearchCollectionViewCell: UICollectionViewCell {
             searchItemLabelStackView.topAnchor.constraint(equalTo: searchItemNameLabel.bottomAnchor, constant: 10),
             searchItemLabelStackView.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
+    }
+    
+    func updateUI(nameText: String?, priceText: String?, releaseDateText: String?, imageURL: URL?, indicator: SDWebImageActivityIndicator) {
+        searchItemImageView.sd_imageIndicator = indicator
+        searchItemImageView.sd_setImage(with: imageURL, completed: nil)
+        searchItemNameLabel.text = nameText
+        searchItemPriceLabel.text = priceText
+        searchItemReleaseDateLabel.text = releaseDateText
     }
 }
