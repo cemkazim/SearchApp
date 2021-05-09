@@ -13,18 +13,18 @@ class BaseNetworkLayer {
     
     private init() {}
     
-    /// Description: Request the API data with parameters.
+    /// Description: Request the API data with parameters (T is a decodable model).
     /// - Parameters:
-    ///   - requestUrl:Formatted url for API data
-    ///   - requestMethod:Any HTTPMethod
+    ///   - requestUrl: Formatted url for API data
+    ///   - requestMethod: Any HTTPMethod
     ///   - requestParameters: Request body (optional)
     ///   - onCompleted: Pass the data with completion
     func request<T: Decodable>(requestUrl: String, requestMethod: HTTPMethod, requestParameters: Parameters? = nil, onCompleted: @escaping (T) -> ()) {
         AF.request(requestUrl, method: requestMethod, parameters: requestParameters, encoding: URLEncoding.default).response { (response) in
             guard let remoteData = response.data else { return }
             do {
-                let localData = try JSONDecoder().decode(T.self, from: remoteData)
-                onCompleted(localData)
+                let decodedData = try JSONDecoder().decode(T.self, from: remoteData)
+                onCompleted(decodedData)
             } catch let error {
                 print(error)
             }

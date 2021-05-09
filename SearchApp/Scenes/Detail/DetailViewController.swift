@@ -96,10 +96,10 @@ class DetailViewController: UIViewController {
     
     private func addSubviews() {
         view.addSubview(scrollableStackView)
-        scrollableStackView.addSubViewToStackView(detailImageView)
-        scrollableStackView.addSubViewToStackView(detailNameLabel)
-        scrollableStackView.addSubViewToStackView(detailHeaderLabelStackView)
-        scrollableStackView.addSubViewToStackView(detailDescriptionLabel)
+        scrollableStackView.addViewToStackView(detailImageView)
+        scrollableStackView.addViewToStackView(detailNameLabel)
+        scrollableStackView.addViewToStackView(detailHeaderLabelStackView)
+        scrollableStackView.addViewToStackView(detailDescriptionLabel)
     }
     
     private func setupConstraints() {

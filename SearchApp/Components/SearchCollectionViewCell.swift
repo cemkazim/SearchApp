@@ -86,7 +86,7 @@ class SearchCollectionViewCell: UICollectionViewCell {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             searchItemImageView.topAnchor.constraint(equalTo: topAnchor, constant: 15),
-            searchItemImageView.widthAnchor.constraint(equalToConstant: 125),
+            searchItemImageView.widthAnchor.constraint(equalToConstant: 100),
             searchItemImageView.heightAnchor.constraint(equalToConstant: 100),
             searchItemImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             
