@@ -58,7 +58,10 @@ class ScrollableStackView: UIView {
         ])
     }
     
-    public func addSubViewToStackView(_ subview: UIView) {
+    /// Description: Add an arranged subview to StackView.
+    /// - Parameters:
+    ///   - subview: Any UIView item.
+    public func addViewToStackView(_ subview: UIView) {
         stackView.addArrangedSubview(subview)
     }
 }
