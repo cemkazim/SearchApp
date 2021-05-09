@@ -6,26 +6,28 @@
 //
 
 import Alamofire
-import RxSwift
 
-public class BaseNetworkLayer {
+class BaseNetworkLayer {
     
-    public static let shared = BaseNetworkLayer()
+    static let shared = BaseNetworkLayer()
     
     private init() {}
     
-    public func request<T: Decodable>(requestUrl: String, requestMethod: HTTPMethod, requestParameters: Parameters? = nil) -> Observable<T> {
-        return Observable.create { observer -> Disposable in
-            AF.request(requestUrl, method: requestMethod, parameters: requestParameters, encoding: URLEncoding.default).response { (response) in
-                guard let remoteData = response.data else { return }
-                do {
-                    let localData = try JSONDecoder().decode(T.self, from: remoteData)
-                    observer.onNext(localData)
-                } catch let error {
-                    observer.onError(error)
-                }
+    /// Description: Request the API data with parameters (T is a decodable model).
+    /// - Parameters:
+    ///   - requestUrl: Formatted url for API data
+    ///   - requestMethod: Any HTTPMethod
+    ///   - requestParameters: Request body (optional)
+    ///   - onCompleted: Pass the data with completion
+    func request<T: Decodable>(requestUrl: String, requestMethod: HTTPMethod, requestParameters: Parameters? = nil, onCompleted: @escaping (T) -> ()) {
+        AF.request(requestUrl, method: requestMethod, parameters: requestParameters, encoding: URLEncoding.default).response { (response) in
+            guard let remoteData = response.data else { return }
+            do {
+                let decodedData = try JSONDecoder().decode(T.self, from: remoteData)
+                onCompleted(decodedData)
+            } catch let error {
+                print(error)
             }
-            return Disposables.create()
         }
     }
 }

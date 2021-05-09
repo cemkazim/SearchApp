@@ -9,13 +9,15 @@ import UIKit
 
 class ScrollableStackView: UIView {
     
-    lazy var scrollView: UIScrollView = {
+    // MARK: - Properties -
+    
+    private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
-    lazy var stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -34,13 +36,13 @@ class ScrollableStackView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupView() {
+    private func setupView() {
         addSubview(scrollView)
         scrollView.addSubview(stackView)
         setupConstraints()
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -54,5 +56,12 @@ class ScrollableStackView: UIView {
             
             stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
+    }
+    
+    /// Description: Add an arranged subview to StackView.
+    /// - Parameters:
+    ///   - subview: Any UIView item.
+    public func addViewToStackView(_ subview: UIView) {
+        stackView.addArrangedSubview(subview)
     }
 }

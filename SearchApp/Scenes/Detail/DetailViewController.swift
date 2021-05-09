@@ -9,6 +9,8 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    // MARK: - Properties -
+    
     private var scrollableStackView: ScrollableStackView = {
         let view = ScrollableStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -76,10 +78,14 @@ class DetailViewController: UIViewController {
     }()
     public var detailViewModel: DetailViewModel?
     
+    // MARK: - Lifecycles -
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
+    
+    // MARK: - Methods -
     
     private func setupView() {
         view.backgroundColor = .white
@@ -90,30 +96,30 @@ class DetailViewController: UIViewController {
     
     private func addSubviews() {
         view.addSubview(scrollableStackView)
-        scrollableStackView.stackView.addArrangedSubview(detailImageView)
-        scrollableStackView.stackView.addArrangedSubview(detailNameLabel)
-        scrollableStackView.stackView.addArrangedSubview(detailHeaderLabelStackView)
-        scrollableStackView.stackView.addArrangedSubview(detailDescriptionLabel)
+        scrollableStackView.addViewToStackView(detailImageView)
+        scrollableStackView.addViewToStackView(detailNameLabel)
+        scrollableStackView.addViewToStackView(detailHeaderLabelStackView)
+        scrollableStackView.addViewToStackView(detailDescriptionLabel)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            scrollableStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollableStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollableStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollableStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            scrollableStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            scrollableStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            scrollableStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            scrollableStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             
-            detailImageView.centerXAnchor.constraint(equalTo: scrollableStackView.stackView.centerXAnchor),
+            detailImageView.centerXAnchor.constraint(equalTo: scrollableStackView.centerXAnchor),
             detailImageView.heightAnchor.constraint(equalToConstant: 200),
             
             detailNameLabel.topAnchor.constraint(equalTo: detailImageView.bottomAnchor, constant: 20),
-            detailNameLabel.centerXAnchor.constraint(equalTo: scrollableStackView.stackView.centerXAnchor),
+            detailNameLabel.centerXAnchor.constraint(equalTo: scrollableStackView.centerXAnchor),
             
             detailHeaderLabelStackView.topAnchor.constraint(equalTo: detailNameLabel.bottomAnchor, constant: 20),
-            detailHeaderLabelStackView.centerXAnchor.constraint(equalTo: scrollableStackView.stackView.centerXAnchor),
+            detailHeaderLabelStackView.centerXAnchor.constraint(equalTo: scrollableStackView.centerXAnchor),
             
             detailDescriptionLabel.topAnchor.constraint(equalTo: detailHeaderLabelStackView.bottomAnchor, constant: 20),
-            detailDescriptionLabel.centerXAnchor.constraint(equalTo: scrollableStackView.stackView.centerXAnchor)
+            detailDescriptionLabel.centerXAnchor.constraint(equalTo: scrollableStackView.centerXAnchor)
         ])
     }
     
