@@ -125,7 +125,7 @@ class DetailViewController: UIViewController {
     
     private func loadDataIntoViews() {
         if let model = detailViewModel?.searchItemModel {
-            detailImageView.sd_setImage(with: model.imageURL, completed: nil)
+            detailImageView.sd_setImage(with: model.imageURL)
             detailNameLabel.text = model.name
             detailPriceLabel.text = model.price
             detailGenreLabel.text = model.genre
